@@ -1,25 +1,24 @@
 package iksde.slotbooking.adapter.parking;
 
-import iksde.slotbooking.domain.Slot;
+import iksde.slotbooking.domain.SlotModel;
 import lombok.RequiredArgsConstructor;
 
-record ParkingModel(ParkingType type, ParkingSector sector, String desc, Boolean isAvailable) {
-    static ParkingModel of(Slot slot) {
+record ParkingModel(ParkingType type, ParkingSector sector, String desc, Long amount) {
+    static ParkingModel of(SlotModel slot) {
         return new ParkingModel(
-                ParkingType.valueOf(slot.type()),
-                ParkingSector.valueOf(slot.type()),
+                ParkingType.valueOf(slot.getType()),
+                ParkingSector.valueOf(slot.getSector()),
                 String.format("Place %s for Parking is %s",
-                        slot.type(),
+                        slot.getType(),
                         slot.isAvailable() ? "available" : "not available"),
-                slot.isAvailable());
+                slot.getAmount());
     }
 
-    Slot toSlot() {
-        return new Slot(
-                null,
+    SlotModel toSlot() {
+        return new SlotModel(
                 type.name(),
                 sector.name(),
-                isAvailable);
+                amount);
     }
 
     @RequiredArgsConstructor

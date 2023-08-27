@@ -1,25 +1,24 @@
 package iksde.slotbooking.adapter.ksw;
 
-import iksde.slotbooking.domain.Slot;
+import iksde.slotbooking.domain.SlotModel;
 import lombok.RequiredArgsConstructor;
 
-record KswModel(KswType type, KswSector sector, String desc, Boolean isAvailable) {
-    static KswModel of(Slot slot) {
+record KswModel(KswType type, KswSector sector, String desc, Long amount) {
+    static KswModel of(SlotModel slot) {
         return new KswModel(
-                KswType.valueOf(slot.type()),
-                KswSector.valueOf(slot.type()),
+                KswType.valueOf(slot.getType()),
+                KswSector.valueOf(slot.getSector()),
                 String.format("Place %s for KSW is %s",
-                        slot.type(),
+                        slot.getType(),
                         slot.isAvailable() ? "available" : "not available"),
-                slot.isAvailable());
+                slot.getAmount());
     }
 
-    Slot toSlot() {
-        return new Slot(
-                null,
+    SlotModel toSlot() {
+        return new SlotModel(
                 type.name(),
                 sector.name(),
-                isAvailable);
+                amount);
     }
 
     @RequiredArgsConstructor
