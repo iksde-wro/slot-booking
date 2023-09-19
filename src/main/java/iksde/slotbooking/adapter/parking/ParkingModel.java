@@ -1,24 +1,38 @@
 package iksde.slotbooking.adapter.parking;
 
-import iksde.slotbooking.domain.SlotModel;
+import iksde.slotbooking.domain.SlotDTO;
+import iksde.slotbooking.port.Slot;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
-record ParkingModel(ParkingType type, ParkingSector sector, String desc, Long amount) {
-    static ParkingModel of(SlotModel slot) {
+record ParkingModel(@NotNull ParkingType type,
+                    @NotNull ParkingSector sector,
+                    @NotNull String desc,
+                    @NotNull Long amount) implements Slot {
+
+    static ParkingModel of(SlotDTO slot) {
         return new ParkingModel(
                 ParkingType.valueOf(slot.getType()),
                 ParkingSector.valueOf(slot.getSector()),
                 String.format("Place %s for Parking is %s",
                         slot.getType(),
-                        slot.isAvailable() ? "available" : "not available"),
+                        slot.getAmount() <= 0L ? "not available" : "available"),
                 slot.getAmount());
     }
 
-    SlotModel toSlot() {
-        return new SlotModel(
-                type.name(),
-                sector.name(),
-                amount);
+    @Override
+    public String getSector() {
+        return access(sector, Enum::name);
+    }
+
+    @Override
+    public String getType() {
+        return access(type, Enum::name);
+    }
+
+    @Override
+    public Long getAmount() {
+        return amount;
     }
 
     @RequiredArgsConstructor

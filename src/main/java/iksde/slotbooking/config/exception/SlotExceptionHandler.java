@@ -12,17 +12,17 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class SlotExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(SlotNotFoundException.class)
-    protected ResponseEntity<Object> tireNotFoundException(Exception ex, WebRequest request) {
+    protected ResponseEntity<Object> slotNotFoundException(Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler(SlotAlreadyExistException.class)
-    protected ResponseEntity<Object> tireAlreadyExistException(Exception ex, WebRequest request) {
+    protected ResponseEntity<Object> slotAlreadyExistException(Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
     @ExceptionHandler(SlotHasEmptyFieldException.class)
-    protected ResponseEntity<Object> tireHasEmptyFieldException(Exception ex, WebRequest request) {
+    protected ResponseEntity<Object> slotHasEmptyFieldException(Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 }
