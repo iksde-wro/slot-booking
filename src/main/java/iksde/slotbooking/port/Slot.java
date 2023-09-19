@@ -1,24 +1,15 @@
 package iksde.slotbooking.port;
 
-
-import iksde.slotbooking.config.exception.SlotAlreadyExistException;
-import iksde.slotbooking.config.exception.SlotHasEmptyFieldException;
-import iksde.slotbooking.config.exception.SlotNotFoundException;
-import iksde.slotbooking.domain.SlotModel;
-import iksde.slotbooking.domain.SlotX;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.function.Function;
 
 public interface Slot {
-    SlotModel delete(Long id) throws SlotNotFoundException;
+    String getSector();
 
-    SlotModel get(Long id) throws SlotNotFoundException;
+    String getType();
 
-    SlotModel save(SlotModel slotModel) throws SlotAlreadyExistException, SlotHasEmptyFieldException;
+    Long getAmount();
 
-    Page<SlotModel> get(SlotModel slot, Pageable pageable);
-
-    SlotModel reserve(SlotX slotx) throws SlotAlreadyExistException, SlotHasEmptyFieldException;
-
-    SlotModel cancel(SlotX slotX) throws SlotAlreadyExistException, SlotHasEmptyFieldException;
+    default <T, U> U access(T t, Function<T, U> f1) {
+        return t == null ? null : f1.apply(t);
+    }
 }
