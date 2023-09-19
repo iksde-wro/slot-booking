@@ -1,22 +1,18 @@
 package iksde.slotbooking.domain;
 
+import iksde.slotbooking.port.Slot;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SlotRepository extends JpaRepository<SlotModel, Long>, JpaSpecificationExecutor<SlotModel> {
-    @Query("SELECT s FROM SlotModel s WHERE s.type = :#{#slotX.type} AND s.sector = :#{#slotX.sector}")
-    SlotModel findBy(SlotX slotX);
+interface SlotRepository extends JpaRepository<SlotEntity, Long>, JpaSpecificationExecutor<SlotEntity> {
+    @Query("SELECT s FROM SlotEntity s WHERE s.type = :#{#slot.getType()} AND s.sector = :#{#slot.getSector()}")
+    SlotEntity findBy(Slot slot);
 
-    @Query("SELECT CASE WHEN COUNT(t) > 0 THEN true ELSE false END FROM SlotModel t " +
-            "WHERE t.type = :#{#slotModel.type} " +
-            "AND t.sector = :#{#slotModel.sector} ")
-    boolean exists(SlotModel slotModel);
-
-    @Query("SELECT CASE WHEN COUNT(s) > 0 THEN true ELSE false END FROM SlotModel s " +
-            "WHERE s.type = :#{#slotX.type} " +
-            "AND s.sector = :#{#slotX.sector}")
-    boolean exists(SlotX slotX);
+    @Query("SELECT CASE WHEN COUNT(t) > 0 THEN true ELSE false END FROM SlotEntity t " +
+            "WHERE t.type = :#{#slot.getType()} " +
+            "AND t.sector = :#{#slot.getSector()} ")
+    boolean exists(Slot slot);
 }
