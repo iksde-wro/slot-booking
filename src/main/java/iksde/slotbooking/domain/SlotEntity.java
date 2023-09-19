@@ -7,29 +7,32 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Table(name = "slot")
-@NoArgsConstructor
 @Getter
-public class SlotModel {
+@RequiredArgsConstructor
+class SlotEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
+    private Long amount;
 
     private String type;
     private String sector;
-    private Long amount;
 
-    public SlotModel(String type, String sector, Long amount) {
+    public SlotEntity(Long amount, String type, String sector) {
+        this.amount = amount;
         this.type = type;
         this.sector = sector;
-        this.amount = amount;
     }
 
-    public boolean isAvailable() {
-        return 0L < amount;
+    public SlotEntity(Long id, Long amount, String type, String sector) {
+        this.id = id;
+        this.amount = amount;
+        this.type = type;
+        this.sector = sector;
     }
 }
