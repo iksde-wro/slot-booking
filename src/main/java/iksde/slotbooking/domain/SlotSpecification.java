@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class SlotSpecification implements Specification<SlotModel> {
-    private final SlotModel slot;
+class SlotSpecification implements Specification<SlotEntity> {
+    private final SlotEntity slot;
 
     @Override
-    public Predicate toPredicate(Root<SlotModel> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+    public Predicate toPredicate(Root<SlotEntity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
 
         if (slot.getType() != null) {
