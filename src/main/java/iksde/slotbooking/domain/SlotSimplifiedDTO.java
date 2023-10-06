@@ -1,8 +1,16 @@
 package iksde.slotbooking.domain;
 
 import iksde.slotbooking.port.Slot;
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 
-public record SlotSearch(String type, String sector, Long amount) implements Slot {
+@EqualsAndHashCode
+@RequiredArgsConstructor
+public class SlotSimplifiedDTO implements Slot {
+    private final String type;
+    private final String sector;
+    private final Long amount;
+
     @Override
     public String getSector() {
         return sector;

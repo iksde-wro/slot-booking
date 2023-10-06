@@ -27,7 +27,7 @@ class SlotSpecification implements Specification<SlotEntity> {
         }
 
         if (slot.getAmount() != null) {
-            predicates.add(criteriaBuilder.equal(root.get("isAvailable"), slot.getAmount()));
+            predicates.add(criteriaBuilder.equal(root.get("amount"), slot.getAmount()));
         }
 
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

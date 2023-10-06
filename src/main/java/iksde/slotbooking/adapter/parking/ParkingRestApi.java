@@ -3,7 +3,6 @@ package iksde.slotbooking.adapter.parking;
 import iksde.slotbooking.config.exception.SlotAlreadyExistException;
 import iksde.slotbooking.config.exception.SlotHasEmptyFieldException;
 import iksde.slotbooking.config.exception.SlotNotFoundException;
-import iksde.slotbooking.domain.SlotSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,13 +38,13 @@ class ParkingRestApi {
     }
 
     @PostMapping("reserve")
-    private ResponseEntity<ParkingModel> reserve(@RequestBody SlotSearch slotSearch) throws SlotAlreadyExistException, SlotHasEmptyFieldException {
-        return ResponseEntity.ok(ParkingModel.of(service.reserve(slotSearch)));
+    private ResponseEntity<ParkingModel> reserve(@RequestBody ParkingModel parkingModel) throws SlotAlreadyExistException, SlotHasEmptyFieldException {
+        return ResponseEntity.ok(ParkingModel.of(service.reserve(parkingModel)));
     }
 
     @PostMapping("cancel")
-    private ResponseEntity<ParkingModel> cancel(@RequestBody SlotSearch slotSearch) throws SlotAlreadyExistException, SlotHasEmptyFieldException {
-        return ResponseEntity.ok(ParkingModel.of(service.cancel(slotSearch)));
+    private ResponseEntity<ParkingModel> cancel(@RequestBody ParkingModel parkingModel) throws SlotAlreadyExistException, SlotHasEmptyFieldException {
+        return ResponseEntity.ok(ParkingModel.of(service.cancel(parkingModel)));
     }
 
     @DeleteMapping("{id}")

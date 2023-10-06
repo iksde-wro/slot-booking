@@ -1,23 +1,30 @@
 package iksde.slotbooking.adapter.parking;
 
-import iksde.slotbooking.domain.SlotDTO;
 import iksde.slotbooking.port.Slot;
 import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
-record ParkingModel(@NotNull ParkingType type,
-                    @NotNull ParkingSector sector,
-                    @NotNull String desc,
-                    @NotNull Long amount) implements Slot {
+@EqualsAndHashCode
+public class ParkingModel implements Slot {
+    @NotNull(message = "Type cannot be null")
+    private final ParkingType type;
+    @NotNull(message = "Sector cannot be null")
+    private final ParkingSector sector;
+    @NotNull(message = "Amount cannot be null")
+    private final Long amount;
 
-    static ParkingModel of(SlotDTO slot) {
+    static ParkingModel of(Slot slot) {
         return new ParkingModel(
                 ParkingType.valueOf(slot.getType()),
                 ParkingSector.valueOf(slot.getSector()),
-                String.format("Place %s for Parking is %s",
-                        slot.getType(),
-                        slot.getAmount() <= 0L ? "not available" : "available"),
                 slot.getAmount());
+    }
+
+    private ParkingModel(ParkingType type, ParkingSector sector, Long amount) {
+        this.type = type;
+        this.sector = sector;
+        this.amount = amount;
     }
 
     @Override

@@ -57,8 +57,15 @@ public class SlotFacade {
     public SlotDTO reserve(Slot slot) throws SlotAlreadyExistException, SlotHasEmptyFieldException {
         validAndEnsureAvailability(slot);
 
+        repo.delete(new SlotEntity(
+                slot.getAmount(),
+                slot.getType(),
+                slot.getSector()
+        ));
+
+
         return entityToDto(repo.save(new SlotEntity(
-                slot.getAmount() -1L,
+                slot.getAmount() - 1L,
                 slot.getType(),
                 slot.getSector()
         )));
@@ -72,6 +79,12 @@ public class SlotFacade {
 
     public SlotDTO cancel(Slot slot) throws SlotAlreadyExistException, SlotHasEmptyFieldException {
         validAndEnsureAvailability(slot);
+
+        repo.delete(new SlotEntity(
+                slot.getAmount(),
+                slot.getType(),
+                slot.getSector()
+        ));
 
         return entityToDto(repo.save(new SlotEntity(
                 slot.getAmount() + 1L,

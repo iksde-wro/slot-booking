@@ -30,14 +30,12 @@ public abstract class AbstractServiceApi implements ServiceApi {
 
     public SlotDTO reserve(Slot slot) throws SlotAlreadyExistException, SlotHasEmptyFieldException {
         SlotDTO dto = facade.findBy(slot);
-        facade.delete(dto);
         return facade.reserve(dto);
     }
 
     public SlotDTO cancel(Slot slot) throws SlotAlreadyExistException, SlotHasEmptyFieldException {
         SlotDTO dto = facade.findBy(slot);
-        facade.delete(dto);
-        return facade.cancel(slot);
+        return facade.cancel(dto);
     }
 
     public SlotDTO save(Slot slot) throws SlotAlreadyExistException, SlotHasEmptyFieldException {
