@@ -1,0 +1,9 @@
+slot_booking:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: iksdewro/slot-booking:0.0.2
+  service:
+    nodePort: 30001
+  env:
+    config_import: optional:configserver:http://config-server-service:8888
