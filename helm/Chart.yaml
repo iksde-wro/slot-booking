@@ -1,0 +1,5 @@
+apiVersion: v2
+name: slot_booking
+description: Helm Subchart "slot_booking" for iksde-wro
+type: application
+version: 0.0.2
